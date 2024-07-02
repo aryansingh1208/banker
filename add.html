@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Transaction</title>
+    <style>
+        .error {
+            border: 1px solid red;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .form-group .checkbox-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-group .checkbox-group input {
+            width: auto;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #5cb85c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #4cae4c;
+        }
+        .error {
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        class AddTransaction extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    data: JSON.parse(localStorage.getItem('d')) || [],
+                    m: JSON.parse(localStorage.getItem('index')) || 0,
+                    amount: '',
+                    credit: false,
+                    debit: false,
+                    date: '',
+                    recurring: false,
+                    description: '',
+                    category: ''
+                };
+            }
+
+            handleChange = (e) => {
+                const { name, value, type, checked } = e.target;
+                this.setState({
+                    [name]: type === 'checkbox' ? checked : value
+                });
+            };
+
+            handleCreditChange = () => {
+                this.setState({
+                    credit: true,
+                    debit: false
+                });
+            };
+
+            handleDebitChange = () => {
+                this.setState({
+                    credit: false,
+                    debit: true
+                });
+            };
+
+            validateInputs = () => {
+                const { amount, credit, debit, date, description, category } = this.state;
+                return amount && (credit || debit) && date && description && category;
+            };
+
+            addTransaction = () => {
+                if (this.validateInputs()) {
+                    const { data, m, amount, credit, date, recurring, description, category } = this.state;
+                    const type = credit ? 'CREDIT' : 'DEBIT';
+                    const rec = recurring ? 'YES' : 'NO';
+
+                    const transaction = [amount, type, date, rec, description.substring(0, 30), category];
+                    data[m].push(transaction);
+                    localStorage.setItem('d', JSON.stringify(data));
+
+                    this.setState({
+                        amount: '',
+                        credit: false,
+                        debit: false,
+                        date: '',
+                        recurring: false,
+                        description: '',
+                        category: ''
+                    });
+
+                    alert('Transaction added successfully!');
+                } else {
+                    alert('Please fill out all fields.');
+                }
+            };
+
+            render() {
+                return (
+                    <div className="container">
+                        <h1>Enter Your Transaction</h1>
+                        <div className="form-group">
+                            <label htmlFor="amount">Amount</label>
+                            <input
+                                type="number"
+                                id="amount"
+                                name="amount"
+                                placeholder="Amount"
+                                value={this.state.amount}
+                                onChange={this.handleChange}
+                                className={!this.state.amount && this.state.showError ? 'error' : ''}
+                            />
+                        </div>
+                        <div className="form-group checkbox-group">
+                            <label htmlFor="credit">Credit</label>
+                            <input
+                                type="checkbox"
+                                id="credit"
+                                name="credit"
+                                checked={this.state.credit}
+                                onChange={this.handleCreditChange}
+                                className={!this.state.credit && !this.state.debit && this.state.showError ? 'error' : ''}
+                            />
+                            <label htmlFor="debit">Debit</label>
+                            <input
+                                type="checkbox"
+                                id="debit"
+                                name="debit"
+                                checked={this.state.debit}
+                                onChange={this.handleDebitChange}
+                                className={!this.state.credit && !this.state.debit && this.state.showError ? 'error' : ''}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="date">Date</label>
+                            <input
+                                type="date"
+                                id="date"
+                                name="date"
+                                placeholder="Date"
+                                value={this.state.date}
+                                onChange={this.handleChange}
+                                className={!this.state.date && this.state.showError ? 'error' : ''}
+                            />
+                        </div>
+                        <div className="form-group checkbox-group">
+                            <label htmlFor="recurring">Recurring</label>
+                            <input
+                                type="checkbox"
+                                id="recurring"
+                                name="recurring"
+                                checked={this.state.recurring}
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="description">Description</label>
+                            <input
+                                type="text"
+                                id="description"
+                                name="description"
+                                placeholder="Description (Maximum 30 Characters)"
+                                value={this.state.description}
+                                onChange={this.handleChange}
+                                className={!this.state.description && this.state.showError ? 'error' : ''}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="category">Category</label>
+                            <input
+                                type="text"
+                                id="category"
+                                name="category"
+                                placeholder="Category"
+                                value={this.state.category}
+                                onChange={this.handleChange}
+                                className={!this.state.category && this.state.showError ? 'error' : ''}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <button onClick={this.addTransaction}>Add Transaction</button>
+                        </div>
+                        <div className="form-group">
+                            <a href="dashboard.html">Go back to dashboard</a>
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(<AddTransaction />, document.getElementById('root'));
+    </script>
+</body>
+</html>
+
+

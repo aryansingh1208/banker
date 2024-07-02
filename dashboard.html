@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Poppins, sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #4a90e2; 
+            color: #ffffff; 
+            padding: 20px; 
+            ;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            display: flex;
+        }
+        .addButton1{
+            text-decoration: none;
+            padding-left: 10px;
+            padding-top: 17px;
+            padding-bottom: 10px;
+            padding-right: 10px;    
+            border-radius: 50px;
+            transition: 0.3s;
+            color: white;
+            
+        }
+        .addButton{
+            text-decoration: none;
+            padding-left: 10px;
+            padding-top: 17px;
+            padding-bottom: 10px;
+            padding-right: 10px;    
+            border-radius: 50px;
+            transition: 0.3s;
+            color: white;
+            animation-name: blink;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            
+        }
+        @keyframes blink {
+            0%{
+                opacity: 1;
+            }
+            50%{
+                opacity: 0.3;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
+        .addButton:hover{
+            background-color: #4772a3;
+            opacity: 0.8;
+            animation-play-state: paused;
+        }
+        .addButton1:hover{
+            background-color: #4772a3;
+            opacity: 0.8;
+            animation-play-state: paused;
+        }
+        
+        .dash{
+            margin: 0; 
+            font-size: 2.5rem;
+            font-weight: 600; 
+            letter-spacing: 1.5px;
+            
+        }
+        .welcome {
+            margin: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        .total{
+            border: 1px solid var();
+            border-radius: 10px;
+            padding: 10px 20px;
+            box-shadow: 0 0 10px #0000004d;
+            padding-top: 10px;
+            padding-bottom: 100px;
+            flex: 1;
+            margin-left: 40px;
+            margin-right: 40px;
+            
+
+        }
+        .spend{
+            border: 1px solid var();
+            border-radius: 10px;
+            padding: 10px 20px;
+            box-shadow: 0 0 10px #0000004d;
+            padding-top: 10px;
+            padding-bottom: 100px;
+            flex: 1;
+            margin-left: 40px;
+            margin-right: 40px;
+
+        }
+        .left{
+            border: 1px solid var();
+            border-radius: 10px;
+            padding: 10px 20px;
+            box-shadow: 0 0 10px #0000004d;
+            padding-top: 10px;
+            padding-bottom: 100px;
+            flex:1;
+            margin-left: 40px;
+            margin-right: 40px;
+
+        }
+        .he{
+            font-size: large;
+
+        }
+        .val{
+            text-align: center;
+            margin-top: 60px;
+            font-size: 50px;
+            color: green;
+        }
+        .tota{
+            text-align: center;
+            margin-top: 60px;
+            font-size: 50px;
+            color: green;
+
+        }
+        .minus{
+            text-align: center;
+            margin-top: 60px;
+            font-size: 50px;
+            color: red;
+
+        }
+        .history{
+            display: flex;
+            justify-content: space-between;  
+            align-items: stretch;
+            
+        }
+        .amt{
+            color: green;
+            font-size: larger;
+
+        }
+        .type,.cat{
+            font-size: larger;
+
+        }
+        .date{
+            font-size: larger;
+
+        }
+        .rec{
+            font-size: larger;
+
+        }
+        .desc{
+            font-size: larger;
+
+        }
+        .del{
+            font-size: larger;
+        }
+        .d {
+            background-color: #e63f69;
+            color: white;
+            border-radius: 3px;
+            border: none;
+        }
+        .e{
+            background-color: #1f1a176d;
+            color: white;
+            border-radius: 3px;
+            border: none;
+        }
+        .d:hover{
+            opacity: 0.7;
+        }
+        .e:hover{
+            opacity: 0.7;
+        }
+        .graphs{
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .a2a{
+            color: white;
+            
+            transition: 0.3s;
+
+        }
+        .a2a2{
+            color: white; 
+            text-align: center;
+            margin-left: 10px;
+            transition: 0.3s;
+        }
+        .a2a:hover{
+            color: rgb(219, 219, 21);
+
+        }
+        .a2a2:hover{
+            color: rgb(219, 219, 21);
+        }
+        .a2a23{
+            color: white; 
+            /* padding-top: 17px;  */
+            margin-left: 10px;
+            transition: 0.3s;
+
+        }
+        .a2a23:hover{
+            color: rgb(219, 219, 21);
+
+        }
+        
+
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</head>
+<body style="background-color: white;">
+
+    <div class="header">
+        <h1 class="dash">Dashboard</h1>
+        <a href="add.html" style="text-align: end;margin-left: 950px;" class="addButton" >Add Transaction</a>
+        <a href="index.html" style="text-align: end;margin-left: 10px;" class="addButton1" >Log Out</a>
+    </div>
+    <div ><p class="welcome">hahahaha</p>
+        
+    </div>
+    <div class="container1" style="display: flex; justify-content: space-between; align-items: stretch;;">
+        <div class="total">
+            <p class="he">Total Income</p>
+            <h1 class="val">0.00</h1>
+
+        </div>
+        <div class="spend">
+            <p class="he">Total Expense</p>
+            <h1 class="minus" style="color: red;">0.00</h1>
+
+        </div>
+        <div class="left">
+            <p class="he">Total Left</p>
+            <h1 class="tota">0.00</h1>
+        </div>
+    </div>
+    
+    
+    <div class="container2" style="display: flex; height: fit-content; margin-top: 40px;border-bottom: #151a1a solid 1px; border-top: #151a1a solid 1px">
+        <div style="background-color: rgb(200, 198, 198); width: 250vh; max-height: 300px;overflow-y: auto;">
+            <div style="display: flex;">
+            <h2 style="margin-left: 10px;">Transaction History</h2>
+            
+            
+            
+        </div>
+            <div class="history">
+                <div>
+                    <div style="display: flex;align-items: center;flex-direction: column;">
+                    <p style="margin-left: 80px; opacity: 0.8;">Amount</p>
+                    <p class="amt" style="margin-left: 80px;"></p>
+                </div>
+                </div>
+                <div>
+                    <div style="display: flex;align-items: center;flex-direction: column;">
+                        <p style=" opacity: 0.8;">Type</p>
+                        <p class="type"></p>
+                </div>
+                </div>
+                <div>
+                    <div style="display: flex;align-items: center;flex-direction: column;">
+                        <p style= "opacity: 0.8;">Date</p>
+                        <p class="date"></p>
+                </div>
+                </div>
+                <div>
+                    <div style="display: flex;text-align: center;flex-direction: column;">
+                        <p style=" opacity: 0.8;">Recurring</p>
+                        <p class="rec"></p>
+                </div>
+                </div>
+
+
+                <div>
+                    <div style="display: flex;text-align: center;flex-direction: column;">
+                        <p style=" opacity: 0.8;">Category</p>
+                        <p class="cat"></p>
+                </div>
+                </div>
+
+
+
+                <div>
+                    <div style="display: flex;align-items: center;flex-direction: column;">
+                        <p style="   opacity: 0.8;">Description</p>
+                        <p class="desc" ></p>
+                </div>
+                </div>
+
+                <div>
+                    <div style="display: flex;text-align: center;flex-direction: column;">
+                        <p style="margin-right: 80px; opacity: 0.8;">Updation</p>
+                        <p class="del" style="margin-right: 80px;"></p>
+                </div>
+                </div>
+
+
+            </div>
+        
+        </div>
+    </div>
+    <p style="font-family: Poppins, sans-serif;font-weight: 400;  text-align: center;  color: #000000;font-size: 44px;margin: 0; font-size: 2.5rem;font-weight: 600; letter-spacing: 1.5px; margin-top: 30px;">GRAPHICAL ANALYSIS</p>
+    <div class="graphs" style="padding-bottom: 2%;">
+        <canvas id="myChart" style="width:100%;max-width:650px;"></canvas>
+        <canvas id="myChart1" style="width:100%;max-width:650px;"></canvas>
+    </div>
+    <div style="height: 20px;"></div>
+    <div style="height: 26vh;background-color:rgb(14, 14, 120,0.8); ">
+        <div style="width: 550px; display: flex; flex-direction: column;">
+            <div style="display: flex; padding-left: 1%;align-items: center; margin-top: 2%;">    
+            <img src="email.png" style="width: 10%; height: 100%;">
+            <p class="a2a">iamaryansingh1208@gmail.com</p>
+            </div>
+            <div style="display: flex; padding-left: 2%;margin:0; align-items: centers;">
+                <img src="user.png" style="width: 8%; height: 100%;">
+                <p class="a2a2" >Aryan Singh</p>
+            </div>
+            <div style="display: flex; padding-left: 2%;margin:0; align-items: center;">
+                <img src="software.png" style="width: 8%; height: 100%;margin-top: 2%;">
+                <p class="a2a23" >React, HTML, CSS, JavaScript</p>
+            </div>
+        </div>
+        </div>
+        
+    
+
+
+
+
+    <script>
+
+let data = JSON.parse(localStorage.getItem('d'));
+let m = JSON.parse(localStorage.getItem('index'));
+console.log(data[m]);
+
+let f2 = JSON.parse(localStorage.getItem('f1'));
+if (f2) {
+    document.querySelector('.welcome').innerHTML = `Welcome, ${f2}!`;
+} else {
+    document.querySelector('.welcome').innerHTML = `Hello, User!`;
+}
+
+
+if (data[m][0].length !== 6) {
+    data[m].splice(0, 1);
+}
+console.log(data[m]);
+
+
+let totalExpenses = data[m].length;
+let amt = '';
+let type = '';
+let date = '';
+let rec = '';
+let cat = '';
+let desc = '';
+let total = 0;
+let plus = 0;
+let minus = 0;
+let del = '';
+
+for (let i = 0; i < totalExpenses; i++) {
+    let transaction = data[m][i];
+    let amount = parseFloat(transaction[0]);
+    let transactionDate = transaction[2]; 
+    let recurring = transaction[3];
+
+    
+    if (recurring === 'YES') {
+        let monthsDiff = getMonthsDifference(transactionDate, new Date().toISOString().slice(0, 10));
+        amount *= monthsDiff;
+        transaction[0] = amount.toFixed(2); 
+    }
+
+    if (transaction[1] === 'DEBIT') {
+        minus += amount;
+    } else {
+        plus += amount;
+    }
+
+  
+    amt += transaction[0] + "<br><br>";
+    type += transaction[1] + "<br><br>";
+    date += transaction[2] + "<br><br>";
+    rec += transaction[3] + "<br><br>";
+    cat += transaction[5] + "<br><br>";
+    desc += transaction[4] + "<br><br>";
+    del += `<button class="d" onClick="funcpop(${i})">Delete</button><button class="e" onClick="funcedit(${i})" style="margin-left:15px;">Edit</button><br><br>`;
+}
+
+
+document.querySelector('.amt').innerHTML = amt;
+document.querySelector('.type').innerHTML = type;
+document.querySelector('.date').innerHTML = date;
+document.querySelector('.rec').innerHTML = rec;
+document.querySelector('.cat').innerHTML = cat;
+document.querySelector('.desc').innerHTML = desc;
+document.querySelector('.val').innerHTML = `${plus.toFixed(2)}`;
+document.querySelector('.minus').innerHTML = `${minus.toFixed(2)}`;
+document.querySelector('.tota').innerHTML = `${(plus - minus).toFixed(2)}`;
+document.querySelector('.del').innerHTML = del;
+
+
+if ((plus - minus) < 0) {
+    document.querySelector('.tota').style.color = "red";
+} else {
+    document.querySelector('.tota').style.color = "green";
+}
+
+localStorage.setItem('d', JSON.stringify(data));
+function getMonthsDifference(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    let months = (end.getFullYear() - start.getFullYear()) * 12;
+    months -= start.getMonth();
+    months += end.getMonth();
+
+    
+    return months <= 0 ? 1 : months;
+}
+
+
+function funcpop(j) {
+    amt = '';
+    type = '';
+    date = '';
+    rec = '';
+    cat = '';
+    desc = '';
+    total = 0;
+    plus = 0;
+    minus = 0;
+    del = '';
+
+    data[m].splice(j, 1); 
+
+
+    totalExpenses = data[m].length;
+
+    for (let i = 0; i < totalExpenses; i++) {
+        let transaction = data[m][i];
+        let amount = parseFloat(transaction[0]);
+
+        if (transaction[1] === 'DEBIT') {
+            minus += amount;
+        } else {
+            plus += amount;
+        }
+
+       
+        amt += transaction[0] + "<br><br>";
+        type += transaction[1] + "<br><br>";
+        date += transaction[2] + "<br><br>";
+        rec += transaction[3] + "<br><br>";
+        cat += transaction[5] + "<br><br>";
+        desc += transaction[4] + "<br><br>";
+        del += `<button class="d" onClick="funcpop(${i})">Delete</button><button class="e" style="margin-left:15px;">Edit</button><br><br>`;
+    }
+
+    
+    document.querySelector('.amt').innerHTML = amt;
+    document.querySelector('.type').innerHTML = type;
+    document.querySelector('.date').innerHTML = date;
+    document.querySelector('.rec').innerHTML = rec;
+    document.querySelector('.cat').innerHTML = cat;
+    document.querySelector('.desc').innerHTML = desc;
+    document.querySelector('.val').innerHTML = `${plus.toFixed(2)}`;
+    document.querySelector('.minus').innerHTML = `${minus.toFixed(2)}`;
+    document.querySelector('.tota').innerHTML = `${(plus - minus).toFixed(2)}`;
+    document.querySelector('.del').innerHTML = del;
+
+    
+    if ((plus - minus) < 0) {
+        document.querySelector('.tota').style.color = "red";
+    } else {
+        document.querySelector('.tota').style.color = "green";
+    }
+
+    
+    localStorage.setItem('d', JSON.stringify(data));
+}
+
+
+
+
+        function funcedit(j)
+        { 
+            localStorage.setItem('editindex',(JSON.stringify(j)));
+            window.location.href = `edit.html`;
+        }
+
+
+
+        function add()
+        {
+            window.location.href = `add.html`;
+        }
+
+
+
+
+        var xValues = ["Credit", "Debit"];
+        var yValues = [plus,minus];
+        var barColors = [
+        
+        "#00aba9",
+        "#b91d47",
+        "#e8c3b9",
+        "#1e7145"
+        ];
+
+        new Chart("myChart", {
+        type: "doughnut",
+        data: {
+            labels: xValues,
+            datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+            }]
+        },
+        options: {
+            title: {
+            display: true,
+            text: "Earning and Spending Analysis"
+            }
+        }
+        });
+
+
+        let xValues1 = [];
+let yValues1 = [];
+let c1 = 0;
+let c2;
+
+for (let k = 0; k < data[m].length; k++) {
+    c1 = 0;
+    for (let h = 0; h < xValues1.length; h++) {
+        if (data[m][k][5] == xValues1[h]) {
+            c1 = 1;
+            c2 = h
+            break;
+
+        }
+    }
+    if (c1 === 1) {
+        if (data[m][k][1]=="CREDIT")
+        {
+        yValues1[c2] = Number(yValues1[c2]) + Number(data[m][k][0]);
+        }
+        else{
+            yValues1[c2] = Number(yValues1[c2]) - Number(data[m][k][0]);
+        }
+    } else {
+        xValues1.push(data[m][k][5]);
+        yValues1.push(data[m][k][0]);
+    }
+}
+
+console.log(xValues1);
+
+var barColors = [
+    "#b91d47", "#00aba9", "#2b5797", "#e8c3b9", "#1e7145",
+    "#b91d47", "#00aba9", "#2b5797", "#e8c3b9", "#1e7145"
+];
+
+new Chart("myChart1", {
+    type: "pie",
+    data: {
+        labels: xValues1,
+        datasets: [{
+            backgroundColor: barColors,
+            data: yValues1
+        }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: "Category Wise Analysis"
+        }
+    }
+});
+
+    </script>
+
+</body>
+</html>
+

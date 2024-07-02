@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://unpkg.com/react/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .form-group .checkbox-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-group .checkbox-group input {
+            width: auto;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #5cb85c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #4cae4c;
+        }
+        .error {
+            border: 2px solid red;
+        }
+        .amt, .des, .cat, .type, .date1, .rec {
+            margin-top: 2px;
+            padding-top: 0;
+            opacity: 0.7;
+            color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class EditTransaction extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    data: [],
+                    m: null,
+                    i: null,
+                    amount: '',
+                    credit: null,
+                    date: '',
+                    recurring: false,
+                    description: '',
+                    category: ''
+                };
+            }
+
+            componentDidMount() {
+                const data = JSON.parse(localStorage.getItem('d')) || [];
+                const m = JSON.parse(localStorage.getItem('index'));
+                const i = JSON.parse(localStorage.getItem('editindex'));
+
+                this.setState({ data: data, m: m, i: i });
+
+                if (m !== null && i !== null && data[m] && data[m][i]) {
+                    this.setState({
+                        amount: data[m][i][0],
+                        credit: data[m][i][1],
+                        date: data[m][i][2],
+                        recurring: data[m][i][3] === 'YES',
+                        description: data[m][i][4],
+                        category: data[m][i][5]
+                    });
+                }
+            }
+
+            a = (e) => this.setState({ amount: e.target.value });
+            b = (e) => {
+                if (e.target.checked) {
+                    this.setState({ credit: 'CREDIT' });
+                    document.getElementById('debit').checked = false;
+                }
+            };
+            c = (e) => {
+                if (e.target.checked) {
+                    this.setState({ credit: 'DEBIT' });
+                    document.getElementById('credit').checked = false;
+                }
+            };
+            d = (e) => this.setState({ date: e.target.value });
+            e = (e) => this.setState({ recurring: e.target.checked });
+            f = (e) => this.setState({ description: e.target.value.substring(0, 30) });
+            g = (e) => this.setState({ category: e.target.value });
+
+            h = () => {
+                const { data, m, i, amount, credit, date, recurring, description, category } = this.state;
+                const updatedAmount = amount || data[m][i][0];
+                const updatedCredit = credit || data[m][i][1];
+                const updatedDate = date || data[m][i][2];
+                const updatedRecurring = recurring ? 'YES' : 'NO';
+                const updatedDescription = description || data[m][i][4];
+                const updatedCategory = category || data[m][i][5];
+
+                const updatedData = [...data];
+                updatedData[m][i] = [updatedAmount, updatedCredit, updatedDate, updatedRecurring, updatedDescription, updatedCategory];
+                localStorage.setItem('d', JSON.stringify(updatedData));
+
+                alert('Editing Done!');
+            };
+
+            render() {
+                const { data, m, i, amount, date, recurring, description, category } = this.state;
+
+                return (
+                    <div className="container">
+                    <h1>Edit Your Transaction</h1>
+                    <div className="form-group">
+                    <label htmlFor="amount">Amount</label>
+                    <input type="number" id="amount" placeholder="Amount" value={amount} onChange={this.a} />
+                    <p className="amt">Current Value: {data[m] && data[m][i] && data[m][i][0]}</p></div>
+
+                    <div className="form-group checkbox-group" style={{ display: 'flex' }}>
+                        <label htmlFor="credit">Credit</label>
+                        <input type="checkbox" id="credit" onChange={this.b} />
+                        <label htmlFor="debit" style={{ marginLeft: '0px' }}>Debit</label>
+                        <input type="checkbox" id="debit" onChange={this.c} />
+                        <p className="type">Current Value: {data[m] && data[m][i] && data[m][i][1]}</p>
+                        </div>
+
+                        <div className="form-group">
+                        <label htmlFor="date">Date</label>
+                        <input type="date" id="date" placeholder="Date" value={date} onChange={this.d} />
+                        <p className="date1">Current Value: {data[m] && data[m][i] && data[m][i][2]}</p>
+                        </div>
+
+            <div className="form-group checkbox-group">
+            <label htmlFor="recurring">Recurring</label>
+            <input type="checkbox" id="recurring" checked={recurring} onChange={this.e} />
+            <p className="rec">Current Value: {data[m] && data[m][i] && data[m][i][3]}</p>
+            </div>
+
+                <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <input type="text" id="description" placeholder="Description (30 Characters Maximum)" value={description} onChange={this.f} />
+                <p className="des">Current Value: {data[m] && data[m][i] && data[m][i][4]}</p>
+                </div>
+
+                <div className="form-group">
+                <label htmlFor="category">Category</label>
+                <input type="text" id="category" placeholder="Category" value={category} onChange={this.g} />
+                <p className="cat">Current Value: {data[m] && data[m][i] && data[m][i][5]}</p></div>
+
+                <div className="form-group">
+                    <button onClick={this.h}>Edit Transaction</button>
+                </div>
+
+                <div className="form-group">
+                    <a href="dashboard.html">Go Back</a>
+                </div>
+            </div>
+            );
+        }
+    }
+
+        ReactDOM.render(<EditTransaction />, document.getElementById('root'));
+    </script>
+</body>
+</html>
+
